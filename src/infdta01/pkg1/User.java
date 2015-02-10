@@ -10,34 +10,10 @@ package infdta01.pkg1;
  * @author isaac
  */
 public class User {
-    
+    /**
+     * userId array has to be sorted first to use it
+     */
     private int userId;
-    // sortert zijn
-    // lezen van de data set (Text file)
-    private int itemID[];
-    private double rating[];
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int[] getItemID() {
-        return itemID;
-    }
-
-    public void setItemID(int[] itemID) {
-        this.itemID = itemID;
-    }
-
-    public double[] getRating() {
-        return rating;
-    }
-
-    public void setRating(double[] rating) {
-        this.rating = rating;
-    }
+    private int[] itemID;
+    private double[] rating;
 }
