@@ -16,7 +16,6 @@ public class User {
     // lezen van de data set (Text file)
     private int itemID[];
     private double rating[];
-    //
 
     public int getUserId() {
         return userId;
