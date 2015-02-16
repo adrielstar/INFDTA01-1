@@ -22,7 +22,7 @@ public class UserItem
     public static void main(String[] args) throws FileNotFoundException
     {
         // TODO code application logic here
-        File file = new File ("C:\\Users\\Adriel\\Documents\\NetBeansProjects\\JavaApplication1/UserItem.txt");
+        File file = new File ("UserItem.txt");
         Scanner read = new Scanner(file);
         while(read.hasNextLine())
         {
