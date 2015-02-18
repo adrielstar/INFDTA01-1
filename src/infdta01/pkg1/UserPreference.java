@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 public class UserPreference {
 
-    public int userId = 0;
+    public int[] userId = new int[0];
     public int[] itemId = new int[0];
     public double[] rating = new double[0];
     
-    public void vul(int itemId, double rating) {
+    public void vul(int userId, int itemId, double rating) {
         
         int itemIdLength = this.itemId.length;
         int newItemIdLength = itemIdLength + 1;
@@ -30,12 +30,13 @@ public class UserPreference {
             
                 
         } else {
-            this.binaryInsert(itemId, rating);
+            this.binaryInsert(userId, itemId, rating);
         } 
     }
    
-    public void binaryInsert(int itemId, double rating) {
+    public void binaryInsert(int userId, int itemId, double rating) {
         int[] biggerItemId = new int[this.itemId.length+1];
+        int[] biggerUserId = new int[this.userId.length+1];
         double[] biggerRating = new double[this.rating.length+1];
         
         /** Define a variable to indicate that if a property location is found.*/
@@ -43,25 +44,28 @@ public class UserPreference {
         /** Define a variable to store an index for insert*/
         int indexToInsert = 0;
         for (int i = 0; i < this.itemId.length; i++){
-             if ( !found && itemId >= this.itemId[i]){
-                 found = true;
-                 indexToInsert = i;
-                 biggerItemId[indexToInsert] = itemId;
-                 biggerRating[indexToInsert] = rating;
-                 i--;
-             }
-             else{
-                 if(found)
-                 {
-                     biggerItemId[i+1] = this.itemId[i]; 
-                     biggerRating[i+1] = this.rating[i]; 
-                 }else
-                 {
-                     biggerItemId[i] = this.itemId[i];
-                     biggerRating[i] = this.rating[i];
-                 }
+            if ( !found && itemId >= this.itemId[i]){
+                found = true;
+                indexToInsert = i;
+                biggerUserId[indexToInsert] = userId;
+                biggerItemId[indexToInsert] = itemId;
+                biggerRating[indexToInsert] = rating;
+                i--;
+            }
+            else{
+               if(found)
+               {
+                  biggerUserId[i+1] = this.userId[i]; 
+                  biggerItemId[i+1] = this.itemId[i]; 
+                  biggerRating[i+1] = this.rating[i]; 
+               }else
+               {
+                  biggerUserId[i] = this.userId[i];
+                  biggerItemId[i] = this.itemId[i];
+                  biggerRating[i] = this.rating[i];
+               }
 
-             }
+            }
         }
 
         /*
@@ -70,11 +74,13 @@ public class UserPreference {
         if(!found)
         {
             indexToInsert = this.itemId.length;//
+            biggerUserId[indexToInsert] = userId;
             biggerItemId[indexToInsert] = itemId;
             biggerRating[indexToInsert] = rating;
         }
         this.itemId = biggerItemId;
         this.rating = biggerRating;
+        this.userId = biggerUserId;
     }
     
     /**
@@ -89,7 +95,11 @@ public class UserPreference {
         while(read.hasNextLine())
         {
             String line = read.nextLine();
-            System.out.println(line);
+            String[] tokens = line.split(",", -1);
+            int userId = Integer.parseInt(tokens[0]);
+            int itemId = Integer.parseInt(tokens[1]);
+            double rating = Double.parseDouble(tokens[2]);
+            this.binaryInsert(userId, itemId, rating);
         }
     }
     
