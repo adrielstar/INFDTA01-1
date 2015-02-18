@@ -5,42 +5,152 @@
  */
 package infdta01.pkg1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class UserPreference {
 
-    private int userid=0;
-    private int[] itemid=new int[0];
-    private double[] rating =new double[0];
+    public int userId = 0;
+    public int[] itemId = new int[0];
+    public double[] rating = new double[0];
     
-    public void vul(int itemid,float rating) {
-/*
+    public void vul(int itemId, double rating) {
         
-        105, 3
+        int itemIdLength = this.itemId.length;
+        int newItemIdLength = itemIdLength + 1;
         
-        103, 6
-        
-        vrsgrn
-        komt 103 al voor?
-        Hoe binary search komt voor dan >0 
-        komt niet voor dan < 0
-        index van invoer = -1 * binary Search
-        
-        
-        array 3 situatie invoegen
-        1) in het begin
-        2) tussen in : bin Search
-        3) ....
-        
-        kopieer stukken mbv system.array.copy
-        
-        
-        
-        
-        
-        
-        */
-        
-        this.itemid[1] = itemid;
-        this.rating[1] = rating;
-    
+        if (itemIdLength == 0) {
+            this.itemId = new int[newItemIdLength];
+            this.rating = new double[newItemIdLength];
+            
+            this.itemId[itemIdLength] = itemId;
+            this.rating[itemIdLength] = rating;
+            
+                
+        } else {
+            this.binaryInsert(itemId, rating);
+        } 
     }
+   
+    public void binaryInsert(int itemId, double rating) {
+        int[] biggerItemId = new int[this.itemId.length+1];
+        double[] biggerRating = new double[this.rating.length+1];
+        
+        /** Define a variable to indicate that if a property location is found.*/
+        boolean found = false;
+        /** Define a variable to store an index for insert*/
+        int indexToInsert = 0;
+        for (int i = 0; i < this.itemId.length; i++){
+             if ( !found && itemId >= this.itemId[i]){
+                 found = true;
+                 indexToInsert = i;
+                 biggerItemId[indexToInsert] = itemId;
+                 biggerRating[indexToInsert] = rating;
+                 i--;
+             }
+             else{
+                 if(found)
+                 {
+                     biggerItemId[i+1] = this.itemId[i]; 
+                     biggerRating[i+1] = this.rating[i]; 
+                 }else
+                 {
+                     biggerItemId[i] = this.itemId[i];
+                     biggerRating[i] = this.rating[i];
+                 }
+
+             }
+        }
+
+        /*
+         * If a property index is not found. Then put the value at last. 
+         */
+        if(!found)
+        {
+            indexToInsert = this.itemId.length;//
+            biggerItemId[indexToInsert] = itemId;
+            biggerRating[indexToInsert] = rating;
+        }
+        this.itemId = biggerItemId;
+        this.rating = biggerRating;
+    }
+    
+    /**
+     * Auto fill array using text files
+     * 
+     * @param fileName
+     * @throws FileNotFoundException 
+     */
+    public void autoFill(String fileName) throws FileNotFoundException {
+        File file = new File (fileName);
+        Scanner read = new Scanner(file);
+        while(read.hasNextLine())
+        {
+            String line = read.nextLine();
+            System.out.println(line);
+        }
+    }
+    
+    /**
+     * Search the position of a key in an array
+     * 
+     * @param array
+     * @param lowerbound
+     * @param upperbound
+     * @param key 
+     */
+    public void binarySearch(int[ ] array, int lowerbound, int upperbound, int key)
+    {
+        int position;
+        int comparisonCount = 1;    // counting the number of comparisons (optional)
+
+        // To start, find the subscript of the middle position.
+        position = ( lowerbound + upperbound) / 2;
+
+        while((array[position] != key) && (lowerbound <= upperbound))
+        {
+            comparisonCount++;
+            if (array[position] > key)             // If the number is > key, ..
+            {                                              // decrease position by one. 
+                upperbound = position - 1;   
+            }                                                             
+            else                                                   
+            {                                                        
+                lowerbound = position + 1;    // Else, increase position by one. 
+            }
+        position = (lowerbound + upperbound) / 2;
+        }
+        if (lowerbound <= upperbound)
+        {
+            System.out.println("The number was found in array subscript" + position);
+            System.out.println("The binary search found the number after " + comparisonCount +
+                 "comparisons.");
+            // printing the number of comparisons is optional
+        }
+        else
+            System.out.println("Sorry, the number is not in this array.  The binary search made "
+                 +comparisonCount  + " comparisons.");
+    }
+    
+    public boolean itemIdExists(int key, int size, int[] data) 
+    {
+        int low = 0;
+        int high = size - 1;
+
+        while(high >= low) {
+            int middle = (low + high) / 2;
+            if(data[middle] == key) {
+                return true;
+            }
+            if(data[middle] < key) {
+                low = middle + 1;
+            }
+            if(data[middle] > key) {
+                high = middle - 1;
+            }
+        }
+        return false;
+   }
 }
