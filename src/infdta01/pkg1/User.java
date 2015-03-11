@@ -13,21 +13,17 @@ public class User {
     /**
      * userId array has to be sorted first to use it
      */
-    private int userId;
-    private int[] itemID;
+    private int[] userId;
+    private int[] itemId;
     private double[] rating;
     
     public void __construct() {
     }
     
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    
     public void setItemRating(int itemId, double rating) {
         // if lenght is 0
         if (this.itemId.length > 0) {
-        this.itemID[1] = itemId;
+        this.itemId[1] = itemId;
         this.rating[1] = rating;
     
         }
