@@ -1,11 +1,16 @@
 package infdta01.pkg1;
- 
+
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class INFDTA011 {
  
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args) throws FileNotFoundException, IOException {
+      
       UserPreference dummy = new UserPreference();
 //      dummy.vul(101, 2.5);
 //      dummy.vul(102, 3.0);
@@ -32,5 +37,25 @@ public class INFDTA011 {
       ratingPersonB[4] = 1.0;
       calculator.calcPearson(ratingPersonA, ratingPersonB);
       calculator.printPearson();
+      
+    User[] users = new User[0];
+      
+    File file = new File ("UserItem.txt");
+    Scanner read = new Scanner(file);
+    int j = 1;
+    while(read.hasNextLine())
+    {
+        String line = read.nextLine();
+        String[] tokens = line.split(",", -1);
+        
+        // if user doesn't exist create user & add to array
+        
+        users = new User[j];
+        User user = new User(1);
+        users[1] = user;
+        
+        // add user -> userList
+        // add movie -> movieList
+    }
   }
 }
