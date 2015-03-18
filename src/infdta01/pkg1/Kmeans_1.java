@@ -6,8 +6,11 @@
 package infdta01.pkg1;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,25 +20,31 @@ import java.util.Scanner;
  * @author adriel
  */
 public class Kmeans_1 {
-    public double sample[][] = new double[0][0];
-    public int sampleNumber = 0;
+    public double sample[][];
+    public String fileName = "UserItem.txt";
 
-    public void userItem() throws FileNotFoundException
+    public void userItem() throws FileNotFoundException, IOException
     {
-        int size = 1;
-        File file = new File("UserItem.txt");
+        int sampleNumber = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.fileName))) {
+            while (reader.readLine() != null) sampleNumber++;
+            reader.close();
+        }
+        
+        this.sample = new double[sampleNumber][sampleNumber];
+        
+        File file = new File(this.fileName);
         Scanner read = new Scanner(file);
+        int lineNumber = 0;
         while(read.hasNextLine())
         {
-            this.sample = new double[size][size];
             String line = read.nextLine();
             String parts[] = line.split(",");
+            
+            this.sample[lineNumber][0] = Double.parseDouble(parts[1]);
+            this.sample[lineNumber][1] = Double.parseDouble(parts[2]);
 
-            this.sample[size][1] = Double.parseDouble(parts[1]);
-            this.sample[size][1] = Double.parseDouble(parts[2]);
-
-            this.sampleNumber++;
-            size++;
+            lineNumber++;
         }
 
     }
@@ -43,11 +52,8 @@ public class Kmeans_1 {
     private static final int NUM_CLUSTERS = 2;    // Total clusters.
     private static final int TOTAL_DATA = 7;      // Total data points.
 
-//    private static final String SAMPLES[][]  = new double[][]{userItem()};
-//    newData = new Data(SAMPLES[sampleNumber][0], SAMPLES[sampleNumber][1], SAMPLES[sampleNumber][2]);
-
-    private static ArrayList<Data> dataSet = new ArrayList<Data>();
-    private static ArrayList<Centroid> centroids = new ArrayList<Centroid>();
+    private static ArrayList<Data> dataSet = new ArrayList<>();
+    private static ArrayList<Centroid> centroids = new ArrayList<>();
 
     private static void initialize() {
         System.out.println("Centroids initialized at:");
@@ -233,11 +239,11 @@ public class Kmeans_1 {
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException
+    public static void main(String[] args) throws FileNotFoundException, IOException
     {
         Kmeans_1 kmeans = new Kmeans_1();
         kmeans.userItem();
-        kmeans.initialize();
+        Kmeans_1.initialize();
         kmeans.kMeanCluster();
 
 
@@ -255,7 +261,7 @@ public class Kmeans_1 {
         // Print out centroid results.
         System.out.println("Centroids finalized at:");
         for (int i = 0; i < NUM_CLUSTERS; i++) {
-            System.out.println("     (" + centroids.get(i).X() + ", " + centroids.get(i).Y());
+            System.out.println("     (" + centroids.get(i).X() + ", " + centroids.get(i).Y() + ")");
         }
         System.out.print("\n");
         return;
