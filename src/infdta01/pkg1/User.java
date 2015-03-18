@@ -5,6 +5,8 @@
  */
 package infdta01.pkg1;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author isaac
@@ -12,24 +14,44 @@ package infdta01.pkg1;
 public class User {
     
     private final int userId;
-    private int[] itemId;
-    private double[] rating;
+    private ArrayList itemId;
+    private ArrayList rating;
 
     public User(int userId) {
+        
+        this.itemId = new ArrayList<>();
+        this.rating = new ArrayList<>();
         this.userId = userId;
     }
 
-    public int[] getItemId() {
-        return itemId;
+    User() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public double[] getRating() {
-        return rating;
+    public void setItemId(int itemId) {
+        this.itemId.add(itemId);
     }
     
-    public int getUserId()
-    {
+    /**
+     * Set the item id and rating
+     * 
+     * @param itemId
+     * @param rating 
+     */
+    public void setItemAndRating(int itemId, double rating) {
+        this.itemId.add(itemId);
+        this.rating.add(rating);
+    }
+
+    public int getUserId() {
         return this.userId;
     }
-    
+
+    public ArrayList getItemsList() {
+        return this.itemId;
+    }
+
+    public ArrayList getRatingsList() {
+        return this.rating;
+    }
 }
