@@ -105,6 +105,13 @@ public class Pearson {
      * @param ratingPersonA
      * @param ratingPersonB
      * @return double result
+     * 
+     * object userA, object userB
+     * 
+     * Make array for same rated items
+     * 
+     * make array ratingPersonA
+     * make array ratingPersonB
      */
     public double calcPearson(double[] ratingPersonA, double[] ratingPersonB) {
         double result;

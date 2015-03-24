@@ -22,10 +22,10 @@ public class Calculation {
         System.out.println("Calculation begin..\n");
         this.users = new ArrayList<>();
         this.fillData();
-        System.out.println(this.users.size() + "\n");
+        System.out.println("Calculation end..\n");
     }
-    public void fillData() throws FileNotFoundException {
-        System.out.println("fillData begin..\n");
+    public final void fillData() throws FileNotFoundException {
+        System.out.println("fillData begin..");
         String fileName = "UserItem.txt";
         File file = new File (fileName);
         Scanner read = new Scanner(file);
@@ -42,6 +42,7 @@ public class Calculation {
             
             this.addUserAndInfo(aUserId, aItemId, aRating);
         }
+        System.out.println("fillData end..\n");
     }
     
     public boolean userExists(User user) {
@@ -56,27 +57,21 @@ public class Calculation {
         return false;
     }
     
+    public void addDetails(User user, int itemId, double rating) {
+        user.setItemAndRating(itemId, rating);
+    }
+    
     public void addUserAndInfo(int userId, int itemId, double rating) {
-        System.out.println("Size: " + this.users.size());
         User user = new User(userId);
         user.setItemAndRating(itemId, rating);
         if (this.userExists(user)) {
-            int index = this.users.indexOf(user);
-            System.out.println("index: " + index);
-            // show index of the user >> this.list.get(index).setItemAndRating(itemId, rating);
-            // add the itemid and rating into the user object
-            // index turning to be -1 check this out !!!!!
-            this.users.get(index).setItemAndRating(itemId, rating);
+            this.addDetails(user, itemId, rating);
         } else {
-            // add user to the users list
-            // add the itemid and rating into the user object
             this.users.add(user);
-            System.out.println("Size: " + this.users.size());
         }
     }
     
     public void printUsers() {
-        System.out.println("Size " + this.users.size());
-        System.out.println("UserList " + this.users);
+        System.out.println("UserList size " + this.users.size());
     }
 }
