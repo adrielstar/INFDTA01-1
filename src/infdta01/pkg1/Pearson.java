@@ -1,5 +1,7 @@
 package infdta01.pkg1;
 
+import java.util.HashMap;
+
 /**
  *
  * @author isaacdecuba
@@ -7,6 +9,18 @@ package infdta01.pkg1;
 public class Pearson {
 
     public double pearson;
+    
+    // persons to compare
+    public double[] personA;
+    public double[] personB;
+    
+    public HashMap<Integer,Double> filteredPersonA; 
+    public HashMap<Integer,Double> filteredPersonB;
+    
+    public Pearson() {
+        this.filteredPersonA = new HashMap<>();
+        this.filteredPersonB = new HashMap<>();
+    }
     
     /**
      * Calculates the first part of the numeration
@@ -102,8 +116,8 @@ public class Pearson {
     /**
      * Calculates the Pearson between 2 arrays
      * 
-     * @param ratingPersonA
-     * @param ratingPersonB
+     * @param personARatedItems
+     * @param personBRatedItems
      * @return double result
      * 
      * object userA, object userB
@@ -113,7 +127,41 @@ public class Pearson {
      * make array ratingPersonA
      * make array ratingPersonB
      */
-    public double calcPearson(double[] ratingPersonA, double[] ratingPersonB) {
+    public double calcPearson(HashMap<Integer,Double> personARatedItems, HashMap<Integer,Double> personBRatedItems) {
+        //double[] ratingPersonA, double[] ratingPersonB
+        double[] ratingPersonA;
+        double[] ratingPersonB;
+        
+        int position = 0;
+        if (personARatedItems.size() < personBRatedItems.size()) {
+            ratingPersonA = new double[personARatedItems.size()];
+            ratingPersonB = new double[personARatedItems.size()];
+            
+            // scan through PersonARatedItems
+            for (HashMap.Entry<Integer,Double> entry : personARatedItems.entrySet()) {
+                if (personBRatedItems.containsKey(entry.getKey())) {
+                    double ratingB = (double) personBRatedItems.get(entry.getKey());
+                    double ratingA = (double) personARatedItems.get(entry.getKey());
+                    ratingPersonA[position] = ratingA;
+                    ratingPersonB[position] = ratingB;
+                    position++;
+                }
+            }
+        } else {
+            ratingPersonA = new double[personBRatedItems.size()];
+            ratingPersonB = new double[personBRatedItems.size()];
+            
+            // scan through PersonBRatedItems
+            for (HashMap.Entry<Integer,Double> entry : personBRatedItems.entrySet()) {
+                if (personARatedItems.containsKey(entry.getKey())) {
+                    double ratingB = (double) personBRatedItems.get(entry.getKey());
+                    double ratingA = (double) personARatedItems.get(entry.getKey());
+                    ratingPersonA[position] = ratingA;
+                    ratingPersonB[position] = ratingB;
+                    position++;
+                }
+            }
+        }
         double result;
         double numeration = this.calcNumeration(ratingPersonA, ratingPersonB);
         double denominator = this.calcDenominator(ratingPersonA) * this.calcDenominator(ratingPersonB);
