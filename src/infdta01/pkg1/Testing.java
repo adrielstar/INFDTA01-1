@@ -17,32 +17,37 @@ public class Testing {
     public static void main(String args[]) throws FileNotFoundException {
         Calculation calc = new Calculation("UserItem.txt");
         
-        HashMap<Integer, Double> user3 = calc.getUser(3).getRatedItems();
+        int userChoiceA = 3;
+        int userChoiceB = 6;
         
-        for (Map.Entry<Integer, Double> item : user3.entrySet()) {
+        HashMap<Integer, Double> userA = calc.getUser(userChoiceA).getRatedItems();
+        
+        System.out.println("List for user: " + userChoiceA);
+        for (Map.Entry<Integer, Double> item : userA.entrySet()) {
             System.out.println("item: " + item.getKey() + " value: " + item.getValue());
         }
         
         System.out.println("\n");
         
-        HashMap<Integer, Double> user4 = calc.getUser(4).getRatedItems();
+        HashMap<Integer, Double> userB = calc.getUser(userChoiceB).getRatedItems();
         
-        for (Map.Entry<Integer, Double> item : user4.entrySet()) {
+        System.out.println("List for user: " + userChoiceB);
+        for (Map.Entry<Integer, Double> item : userB.entrySet()) {
             System.out.println("item: " + item.getKey() + " value: " + item.getValue());
         }
         
         System.out.println("\n");
         
         Pearson pearsonCalculation = new Pearson();
-        pearsonCalculation.calcPearson(calc.getUser(3).getRatedItems(), calc.getUser(4).getRatedItems());
+        pearsonCalculation.calcPearson(calc.getUser(userChoiceA).getRatedItems(), calc.getUser(userChoiceB).getRatedItems());
         pearsonCalculation.printPearson();
         
         Euclidean euclideanCalculation = new Euclidean();
-        euclideanCalculation.calcEuclidean(calc.getUser(3).getRatedItems(), calc.getUser(4).getRatedItems());
+        euclideanCalculation.calcEuclidean(calc.getUser(userChoiceA).getRatedItems(), calc.getUser(userChoiceB).getRatedItems());
         System.out.println("Euclidean: " + euclideanCalculation.getEuclidean());
         
-        Cosine cosine = new Cosine();
-        cosine.calcCosine(calc.getUser(3).getRatedItems(), calc.getUser(4).getRatedItems());
+//        Cosine cosine = new Cosine();
+//        cosine.calcCosine(calc.getUser(3).getRatedItems(), calc.getUser(4).getRatedItems());
         
     }
 

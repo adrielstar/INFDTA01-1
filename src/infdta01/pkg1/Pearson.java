@@ -70,13 +70,9 @@ public class Pearson {
     {
         double result;
         double numeratorOne = this.calcNumeratorOne(ratingPersonA, ratingPersonB);
-        System.out.println("N1: " + numeratorOne);
         double numeratorTwo = this.calcNumeratorTwo(ratingPersonA, ratingPersonB);
-        System.out.println("N2: " + numeratorTwo);
         
         result = numeratorOne - numeratorTwo;
-        
-        System.out.println("numeration: " + result);
         
         return result;
     }
@@ -98,7 +94,6 @@ public class Pearson {
         }
         
         result = Math.sqrt(sumA - (Math.pow(this.calcSumArray(ratingPerson),2)/n));
-        System.out.println("denominator: " + result);
         return result;
     }
     
@@ -135,7 +130,6 @@ public class Pearson {
         double denominator = this.calcDenominator(ratingPersonA) * this.calcDenominator(ratingPersonB);
         
         result = this.pearson = numeration / denominator;
-        System.out.println("pearson: " + result);
         return result;
     }
     
