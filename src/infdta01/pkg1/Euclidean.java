@@ -1,47 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package infdta01.pkg1;
+
+import java.util.HashMap;
 
 /**
  *
  * @author isaacdecuba
  */
 public class Euclidean {
+    private double euclidean;
     
     /**
-     * Calculates the Euclidean between PersonA and a person X
+     * Calculates the Euclidean between the 2 persons in the parameters
      * 
-     * @param ratingPersonA
-     * @param ratingPersonX
-     * @return result
+     * @param personARatedItems
+     * @param personXRatedItems
+     * @return 
      */
-    public double calcEuclidean(double[] ratingPersonA, double[] ratingPersonX)
+    public double calcEuclidean(HashMap<Integer,Double> personARatedItems, HashMap<Integer,Double> personXRatedItems)
     {
-        // length ratingP A can differ from ratingX
-        double result = 1.0;
+        Filter filter = new Filter(personARatedItems, personXRatedItems);
+        double[] ratingPersonA = filter.getPersonA();
+        double[] ratingPersonX = filter.getPersonB();
         
-        for (int i = 0; i <= ratingPersonA.length; i++) {
+        // length ratingP A can differ from ratingX
+        double result = 0.0;
+        
+        for (int i = 0; i < ratingPersonA.length; i++) {
             result+= Math.pow(Math.abs(ratingPersonA[i] - ratingPersonX[i]),2);
         }
-        result = Math.sqrt(result);
+        result = this.euclidean = Math.sqrt(result);
         return result;
     }
     
-    public boolean ratedSameProduct(double[] ratingPersonA, double[] ratingPersonX)
-    {
-        double ratings[][];
-        int n = ratingPersonA.length;
-        double result = 0.0;
-        
-        for (int i = 0; i < n; i++) {
-            if (ratingPersonA[i] == ratingPersonA[i]) {
-                return true;
-            }
-        }
-        return false;
+    public double getEuclidean() {
+        return this.euclidean;
     }
-    
 }

@@ -7,7 +7,6 @@ package infdta01.pkg1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserPreference {
@@ -15,6 +14,7 @@ public class UserPreference {
     public int[] userId = new int[0];
     public int[] itemId = new int[0];
     public double[] rating = new double[0];
+    public User[] users = new User[0];
     
     public void vul(int userId, int itemId, double rating) {
         
@@ -27,7 +27,6 @@ public class UserPreference {
             
             this.itemId[itemIdLength] = itemId;
             this.rating[itemIdLength] = rating;
-            
                 
         } else {
             this.binaryInsert(userId, itemId, rating);
@@ -83,6 +82,47 @@ public class UserPreference {
         this.userId = biggerUserId;
     }
     
+    public void binaryInsertUser(int userId, int itemId, double rating) {
+        User[] biggerUsers = new User[this.users.length+1];
+        
+        /** Define a variable to indicate that if a property location is found.*/
+        boolean found = false;
+        /** Define a variable to store an index for insert*/
+        int indexToInsert = 0;
+        for (int i = 0; i < this.itemId.length; i++){
+            if ( !found && itemId >= this.itemId[i]){
+                found = true;
+                indexToInsert = i;
+                // check if need to create user
+                User user = new User(userId);
+                biggerUsers[indexToInsert] = user;
+                user.setItemAndRating(itemId, rating);
+                i--;
+            }
+            else{
+               if(found)
+               {
+                  biggerUsers[i+1] = this.users[i];
+               }else
+               {
+                  biggerUsers[i] = this.users[i];
+               }
+
+            }
+        }
+        /*
+         * If a property index is not found. Then put the value at last. 
+         */
+        if(!found)
+        {
+            indexToInsert = this.itemId.length;
+            User user = new User(userId);
+            biggerUsers[indexToInsert] = user;
+            user.setItemAndRating(itemId, rating);
+        }
+        this.users = biggerUsers;
+    }
+    
     /**
      * Auto fill array using text files
      * 
@@ -96,10 +136,15 @@ public class UserPreference {
         {
             String line = read.nextLine();
             String[] tokens = line.split(",", -1);
-            int userId = Integer.parseInt(tokens[0]);
-            int itemId = Integer.parseInt(tokens[1]);
-            double rating = Double.parseDouble(tokens[2]);
-            this.binaryInsert(userId, itemId, rating);
+            
+            int aUserId = Integer.parseInt(tokens[0]);
+            int aItemId = Integer.parseInt(tokens[1]);
+            double aRating = Double.parseDouble(tokens[2]);
+            // check if User exist in users Array
+            // no -> binaryInsert(userId)
+            // yes -> user.addRating..
+            
+            this.binaryInsert(aUserId, aItemId, aRating);
         }
     }
     

@@ -70,9 +70,13 @@ public class Pearson {
     {
         double result;
         double numeratorOne = this.calcNumeratorOne(ratingPersonA, ratingPersonB);
+        System.out.println("N1: " + numeratorOne);
         double numeratorTwo = this.calcNumeratorTwo(ratingPersonA, ratingPersonB);
+        System.out.println("N2: " + numeratorTwo);
         
         result = numeratorOne - numeratorTwo;
+        
+        System.out.println("numeration: " + result);
         
         return result;
     }
@@ -94,6 +98,7 @@ public class Pearson {
         }
         
         result = Math.sqrt(sumA - (Math.pow(this.calcSumArray(ratingPerson),2)/n));
+        System.out.println("denominator: " + result);
         return result;
     }
     
@@ -118,55 +123,19 @@ public class Pearson {
      * 
      * @param personARatedItems
      * @param personBRatedItems
-     * @return double result
-     * 
-     * object userA, object userB
-     * 
-     * Make array for same rated items
-     * 
-     * make array ratingPersonA
-     * make array ratingPersonB
+     * @return 
      */
     public double calcPearson(HashMap<Integer,Double> personARatedItems, HashMap<Integer,Double> personBRatedItems) {
-        //double[] ratingPersonA, double[] ratingPersonB
-        double[] ratingPersonA;
-        double[] ratingPersonB;
+        Filter filter = new Filter(personARatedItems, personBRatedItems);
+        double[] ratingPersonA = filter.getPersonA();
+        double[] ratingPersonB = filter.getPersonB();
         
-        int position = 0;
-        if (personARatedItems.size() < personBRatedItems.size()) {
-            ratingPersonA = new double[personARatedItems.size()];
-            ratingPersonB = new double[personARatedItems.size()];
-            
-            // scan through PersonARatedItems
-            for (HashMap.Entry<Integer,Double> entry : personARatedItems.entrySet()) {
-                if (personBRatedItems.containsKey(entry.getKey())) {
-                    double ratingB = (double) personBRatedItems.get(entry.getKey());
-                    double ratingA = (double) personARatedItems.get(entry.getKey());
-                    ratingPersonA[position] = ratingA;
-                    ratingPersonB[position] = ratingB;
-                    position++;
-                }
-            }
-        } else {
-            ratingPersonA = new double[personBRatedItems.size()];
-            ratingPersonB = new double[personBRatedItems.size()];
-            
-            // scan through PersonBRatedItems
-            for (HashMap.Entry<Integer,Double> entry : personBRatedItems.entrySet()) {
-                if (personARatedItems.containsKey(entry.getKey())) {
-                    double ratingB = (double) personBRatedItems.get(entry.getKey());
-                    double ratingA = (double) personARatedItems.get(entry.getKey());
-                    ratingPersonA[position] = ratingA;
-                    ratingPersonB[position] = ratingB;
-                    position++;
-                }
-            }
-        }
         double result;
         double numeration = this.calcNumeration(ratingPersonA, ratingPersonB);
         double denominator = this.calcDenominator(ratingPersonA) * this.calcDenominator(ratingPersonB);
         
         result = this.pearson = numeration / denominator;
+        System.out.println("pearson: " + result);
         return result;
     }
     

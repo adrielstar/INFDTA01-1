@@ -5,7 +5,8 @@
  */
 package infdta01.pkg1;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -13,23 +14,12 @@ import java.util.ArrayList;
  */
 public class User {
     
-    private final int userId;
-    private ArrayList itemId;
-    private ArrayList rating;
+    public final int userId;
+    public final HashMap<Integer,Double> ratedItems; 
 
     public User(int userId) {
-        
-        this.itemId = new ArrayList<>();
-        this.rating = new ArrayList<>();
+        this.ratedItems = new HashMap<>();
         this.userId = userId;
-    }
-
-    User() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId.add(itemId);
     }
     
     /**
@@ -39,19 +29,21 @@ public class User {
      * @param rating 
      */
     public void setItemAndRating(int itemId, double rating) {
-        this.itemId.add(itemId);
-        this.rating.add(rating);
+        this.ratedItems.put(itemId, rating);
     }
 
     public int getUserId() {
         return this.userId;
     }
-
-    public ArrayList getItemsList() {
-        return this.itemId;
+    
+    public HashMap<Integer, Double> getRatedItems() {
+        return this.ratedItems;
     }
-
-    public ArrayList getRatingsList() {
-        return this.rating;
+    
+    public void printRatedItems() {
+        System.out.println("User id: " + this.userId);
+        for (Map.Entry<Integer,Double> item : this.ratedItems.entrySet()) {
+            System.out.println("Key: " + item.getKey() + " Value: " + item.getValue());
+        }
     }
 }

@@ -35,7 +35,7 @@ public class INFDTA011 {
       ratingPersonB[2] = 5.0;
       ratingPersonB[3] = 2.0;
       ratingPersonB[4] = 1.0;
-      calculator.calcPearson(ratingPersonA, ratingPersonB);
+//      calculator.calcPearson(ratingPersonA, ratingPersonB);
       calculator.printPearson();
       
     User[] users = new User[0];

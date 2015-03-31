@@ -18,22 +18,18 @@ import java.util.Scanner;
 public class Calculation {
     public List<User> users;
     
-    public Calculation() throws FileNotFoundException {
-        System.out.println("Calculation begin..\n");
+    public Calculation(String location) throws FileNotFoundException {
         this.users = new ArrayList<>();
-        this.fillData();
-        System.out.println("Calculation end..\n");
+        this.fillData(location);
     }
-    public final void fillData() throws FileNotFoundException {
-        System.out.println("fillData begin..");
-        String fileName = "UserItem.txt";
+    public final void fillData(String location) throws FileNotFoundException {
+        String fileName = location;
         File file = new File (fileName);
         Scanner read = new Scanner(file);
         
         while(read.hasNextLine())
         {
             String line = read.nextLine();
-            System.out.println(line);
             String[] tokens = line.split(",", -1);
             
             int aUserId = Integer.parseInt(tokens[0]);
@@ -42,19 +38,6 @@ public class Calculation {
             
             this.addUserAndInfo(aUserId, aItemId, aRating);
         }
-        System.out.println("fillData end..\n");
-    }
-    
-    public boolean userExists(User user) {
-        int id = user.getUserId();
-        int index = 0;
-        for (User temp : this.users) {
-            if (temp.getUserId() == id) {
-                return true;
-            }
-            index++;
-        }
-        return false;
     }
     
     public void addDetails(User user, int itemId, double rating) {
@@ -62,16 +45,38 @@ public class Calculation {
     }
     
     public void addUserAndInfo(int userId, int itemId, double rating) {
-        User user = new User(userId);
-        user.setItemAndRating(itemId, rating);
-        if (this.userExists(user)) {
-            this.addDetails(user, itemId, rating);
-        } else {
-            this.users.add(user);
+        for (User user : this.users) {
+            if (user.getUserId() == userId) {
+                user.setItemAndRating(itemId, rating);
+                return;
+            } 
         }
+        
+        User user = new User(userId);
+        this.users.add(user);
+        this.addDetails(user, itemId, rating);
     }
     
     public void printUsers() {
         System.out.println("UserList size " + this.users.size());
+        for (User user : this.users) {
+            System.out.println("index: " + this.users.indexOf(user));
+            System.out.println("User Id: " + user.getUserId());
+        }
+    }
+    
+    /**
+     * Get the user object from the [unsorted] user list
+     * 
+     * @param userId
+     * @return User
+     */
+    public User getUser(int userId) {
+        for (User user : this.users) {
+            if (user.getUserId() == userId) {
+                return this.users.get(this.users.indexOf(user));
+            }
+        }
+        return null;
     }
 }
