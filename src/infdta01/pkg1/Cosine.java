@@ -1,6 +1,5 @@
 package infdta01.pkg1;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class Cosine {
     public double[] personB;
     
     public double calcCosine(HashMap<Integer,Double> personARatedItems, HashMap<Integer,Double> personBRatedItems) {
-        Collections.sort(personARatedItems);
+        Collections
         int timesToLoop = 0;
         if (personARatedItems.size() > personBRatedItems.size()) {
             timesToLoop = personARatedItems.size();
