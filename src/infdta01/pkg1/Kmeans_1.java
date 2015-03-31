@@ -22,6 +22,8 @@ import java.util.Scanner;
 public class Kmeans_1 {
     public double sample[][];
     public String fileName = "UserItem.txt";
+    private int TOTAL_DATA = 0;      // Total data points.
+    
 
     public void userItem() throws FileNotFoundException, IOException
     {
@@ -35,22 +37,20 @@ public class Kmeans_1 {
         
         File file = new File(this.fileName);
         Scanner read = new Scanner(file);
-        int lineNumber = 0;
         while(read.hasNextLine())
         {
             String line = read.nextLine();
             String parts[] = line.split(",");
             
-            this.sample[lineNumber][0] = Double.parseDouble(parts[1]);
-            this.sample[lineNumber][1] = Double.parseDouble(parts[2]);
+            this.sample[TOTAL_DATA][0] = Double.parseDouble(parts[1]);
+            this.sample[TOTAL_DATA][1] = Double.parseDouble(parts[2]);
 
-            lineNumber++;
+            TOTAL_DATA++;
         }
 
     }
 
     private static final int NUM_CLUSTERS = 2;    // Total clusters.
-    private static final int TOTAL_DATA = 7;      // Total data points.
 
     private static ArrayList<Data> dataSet = new ArrayList<>();
     private static ArrayList<Centroid> centroids = new ArrayList<>();
