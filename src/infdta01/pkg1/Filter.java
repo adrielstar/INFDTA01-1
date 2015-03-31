@@ -1,9 +1,6 @@
 package infdta01.pkg1;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import static javafx.scene.input.KeyCode.T;
 
 /**
  *
